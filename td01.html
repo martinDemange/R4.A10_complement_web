@@ -6,12 +6,29 @@
     <title>td01</title>
 </head>
 <body>
+    <div title="block01", id="block01">
+    </div>
     <script>
-        var A_arrayRandInt = [];
-        for (let I_index=0; I_index < 20;I_index++){
-            A_arrayRandInt.push(Math.floor(Math.random() * 40)-10);
+        function genArrayRandInt(I_max){
+            var A_arrayRandInt = [];
+            for (let I_index=0; I_index < 20;I_index++){
+                A_arrayRandInt.push(Math.floor(Math.random() * I_max)-10);
+            }
+            return A_arrayRandInt;
         }
-        console.log(A_arrayRandInt);
+        var O_writeBlock01 = document.getElementById('block01');
+        
+        var A_arrayBlock01 = genArrayRandInt(40);
+        console.log(A_arrayBlock01)
+        
+        var I_indexArrayBlock01 = 0;
+        setInterval(() => {
+            //O_writeBlock01.append(A_arrayBlock01[I_index]+' ');
+            let I_index = I_indexArrayBlock01;
+            O_writeBlock01.textContent = A_arrayBlock01[I_index];
+            I_indexArrayBlock01++;
+            if (I_index == 20) {I_indexArrayBlock01=0};
+        },2000);
     </script>
 </body>
 </html>
