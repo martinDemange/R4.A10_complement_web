@@ -7,7 +7,7 @@
     <link rel='stylesheet' href='td01_style.css'></link>
 </head>
 <body>
-    <div title="block01", id="block01", class="green">
+    <div title="block01", id="block01">
     </div>
     <script>
         function genArrayRandInt(I_max){
@@ -20,8 +20,11 @@
         var O_writeBlock01 = document.getElementById('block01');
         
         var A_arrayBlock01 = genArrayRandInt(50);
-        console.log(A_arrayBlock01)
-        
+        console.log(A_arrayBlock01);
+
+        var S_stringCold = '\n : ' + "Brrrrrrr, un peu froid ce matin, mets ta cagoule !";
+        var S_stringHot = '\n : ' + "Caliente ! Vamos a la playa, ho hoho hoho !!";
+
         var I_indexArrayBlock01 = 0;
         setInterval(() => {
             //O_writeBlock01.append(A_arrayBlock01[I_index]+' ');
@@ -30,15 +33,18 @@
 
             if (A_arrayBlock01[I_index] <= 0 && A_arrayBlock01[I_index] >= -10){
                 O_writeBlock01.setAttribute("class", "blue");
+                O_writeBlock01.append(S_stringCold);
             }
             if(A_arrayBlock01[I_index] <= 20 && A_arrayBlock01[I_index] > 0){
                 O_writeBlock01.setAttribute("class", "green");
             }
             if(A_arrayBlock01[I_index] <= 30 && A_arrayBlock01[I_index] > 20){
                 O_writeBlock01.setAttribute("class", "orange");
+                O_writeBlock01.append(S_stringHot);
             }
             if(A_arrayBlock01[I_index] <= 40 && A_arrayBlock01[I_index] > 30){
                 O_writeBlock01.setAttribute("class", "red");
+                O_writeBlock01.append(S_stringHot);
             }
             I_indexArrayBlock01++;
             if (I_index == 20) {I_indexArrayBlock01=0};
