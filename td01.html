@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>td01</title>
-    <link rel='stylesheet' href='td01_style.css'></link>
+    <link rel='stylesheet' href='td01_style.css'>
 </head>
 <body>
     <h1>Temperature</h1>
-    <div title="block01", id="block01">
+    <div title="block01" id="block01" aria-live="polite" role="alert">
     </div>
     <script>
         function genArrayRandInt(I_max){
@@ -49,7 +49,7 @@
             }
             I_indexArrayBlock01++;
             if (I_index == A_arrayBlock01.length-1) {I_indexArrayBlock01=0};
-        },500);
+        },1500);
     </script>
 </body>
 </html>
