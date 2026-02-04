@@ -21,9 +21,7 @@
         <script>
 
             var O_block02 = document.getElementById('block02');
-            var O_writeBlock01 = document.getElementById('block01');
-
-            'use strict';
+            var O_block01 = document.getElementById('block01');
 
             class TabsManual {
                 constructor(groupNode) {
@@ -45,7 +43,7 @@
                         tab.setAttribute('aria-selected', 'false');
                         this.tabpanels.push(tabpanel);
 
-                        tab.addEventListener('keydown', this.onKeydown.bind(this));
+                        //tab.addEventListener('keydown', this.onKeydown.bind(this));
                         tab.addEventListener('click', this.onClick.bind(this));
 
                         if (!this.firstTab) {
@@ -76,64 +74,7 @@
                     currentTab.focus();
                 }
 
-                moveFocusToPreviousTab(currentTab) {
-                    var index;
-
-                    if (currentTab === this.firstTab) {
-                        this.moveFocusToTab(this.lastTab);
-                    } else {
-                        index = this.tabs.indexOf(currentTab);
-                        this.moveFocusToTab(this.tabs[index - 1]);
-                    }
-                }
-
-                moveFocusToNextTab(currentTab) {
-                    var index;
-
-                    if (currentTab === this.lastTab) {
-                        this.moveFocusToTab(this.firstTab);
-                    } else {
-                        index = this.tabs.indexOf(currentTab);
-                        this.moveFocusToTab(this.tabs[index + 1]);
-                    }
-                }
-
                 /* EVENT HANDLERS */
-
-                onKeydown(event) {
-                    var tgt = event.currentTarget,
-                        flag = false;
-
-                    switch (event.key) {
-                        case 'ArrowLeft':
-                            this.moveFocusToPreviousTab(tgt);
-                            flag = true;
-                            break;
-
-                        case 'ArrowRight':
-                            this.moveFocusToNextTab(tgt);
-                            flag = true;
-                            break;
-
-                        case 'Home':
-                            this.moveFocusToTab(this.firstTab);
-                            flag = true;
-                            break;
-
-                        case 'End':
-                            this.moveFocusToTab(this.lastTab);
-                            flag = true;
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                    if (flag) {
-                        event.stopPropagation();
-                        event.preventDefault();
-                    }
-                }
 
                 // Since this example uses buttons for the tabs, the click onr also is activated
                 // with the space and enter keys
@@ -152,45 +93,53 @@
             });
 
 
-            function genArrayRandInt(I_max){
-                var A_arrayRandInt = [];
-                for (let I_index=0; I_index < 20;I_index++){
-                    A_arrayRandInt.push(Math.floor(Math.random() * I_max)-10);
+            class Temperature {
+                constructor(writeNode) {
+                    this.O_writeNode = writeNode;
+                    this.A_arrayBlock01 = this.genArrayRandInt(40);
+                    console.log(this.A_arrayBlock01);
+                    this.S_stringCold = '\n : ' + "Brrrrrrr, un peu froid ce matin, mets ta cagoule !";
+                    this.S_stringHot = '\n : ' + "Caliente ! Vamos a la playa, ho hoho hoho !!";
+                    this.writeTemperature();
                 }
-                return A_arrayRandInt;
+                genArrayRandInt(I_max){
+                    I_max = I_max + 10;
+                    var A_arrayRandInt = [];
+                    for (let I_index=0; I_index < 20;I_index++){
+                        A_arrayRandInt.push(Math.floor(Math.random() * I_max)-10);
+                    }
+                    return A_arrayRandInt;
+                }
+                writeTemperature(){
+                 let I_indexArrayBlock01 = 0;
+                    setInterval(() => {
+                        //O_writeBlock01.append(A_arrayBlock01[I_index]+' ');
+                        let I_index = I_indexArrayBlock01;
+                        this.O_writeNode.textContent = this.A_arrayBlock01[I_index] + '°C ';
+
+                        if (this.A_arrayBlock01[I_index] <= 0 && this.A_arrayBlock01[I_index] >= -10){
+                            this.O_writeNode.setAttribute("class", "blue");
+                            this.O_writeNode.append(this.S_stringCold);
+                        }
+                        if(this.A_arrayBlock01[I_index] <= 20 && this.A_arrayBlock01[I_index] > 0){
+                            this.O_writeNode.setAttribute("class", "green");
+                        }
+                        if(this.A_arrayBlock01[I_index] <= 30 && this.A_arrayBlock01[I_index] > 20){
+                            this.O_writeNode.setAttribute("class", "orange");
+                            this.O_writeNode.append(this.S_stringHot);
+                        }
+                        if(this.A_arrayBlock01[I_index] <= 40 && this.A_arrayBlock01[I_index] > 30){
+                            this.O_writeNode.setAttribute("class", "red");
+                            this.O_writeNode.append(this.S_stringHot);
+                        }
+
+                        I_indexArrayBlock01++;
+                        if (I_index === this.A_arrayBlock01.length-1) {I_indexArrayBlock01=0}
+                    },1500);
+                }
             }
 
-            var A_arrayBlock01 = genArrayRandInt(50);
-            console.log(A_arrayBlock01);
-
-            var S_stringCold = '\n : ' + "Brrrrrrr, un peu froid ce matin, mets ta cagoule !";
-            var S_stringHot = '\n : ' + "Caliente ! Vamos a la playa, ho hoho hoho !!";
-
-            var I_indexArrayBlock01 = 0;
-            setInterval(() => {
-                //O_writeBlock01.append(A_arrayBlock01[I_index]+' ');
-                let I_index = I_indexArrayBlock01;
-                O_writeBlock01.textContent = A_arrayBlock01[I_index] + '°C ';
-
-                if (A_arrayBlock01[I_index] <= 0 && A_arrayBlock01[I_index] >= -10){
-                    O_writeBlock01.setAttribute("class", "blue");
-                    O_writeBlock01.append(S_stringCold);
-                }
-                if(A_arrayBlock01[I_index] <= 20 && A_arrayBlock01[I_index] > 0){
-                    O_writeBlock01.setAttribute("class", "green");
-                }
-                if(A_arrayBlock01[I_index] <= 30 && A_arrayBlock01[I_index] > 20){
-                    O_writeBlock01.setAttribute("class", "orange");
-                    O_writeBlock01.append(S_stringHot);
-                }
-                if(A_arrayBlock01[I_index] <= 40 && A_arrayBlock01[I_index] > 30){
-                    O_writeBlock01.setAttribute("class", "red");
-                    O_writeBlock01.append(S_stringHot);
-                }
-
-                I_indexArrayBlock01++;
-                if (I_index === A_arrayBlock01.length-1) {I_indexArrayBlock01=0}
-            },1500);
+            new Temperature(O_block01);
 
         </script>
     </div>
