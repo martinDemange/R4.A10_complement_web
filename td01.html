@@ -83,19 +83,10 @@
                 }
             }
 
-            // Initialize tablist
-
-            window.addEventListener('load', function () {
-                var tablists = document.querySelectorAll('[role=tablist].manual');
-                for (var i = 0; i < tablists.length; i++) {
-                    new TabsManual(tablists[i]);
-                }
-            });
-
-
             class Temperature {
-                constructor(writeNode) {
+                constructor(writeNode, writeHistoryNode) {
                     this.O_writeNode = writeNode;
+                    this.O_writeHistoryNode = writeHistoryNode;
                     this.A_arrayBlock01 = this.genArrayRandInt(40);
                     console.log(this.A_arrayBlock01);
                     this.S_stringCold = '\n : ' + "Brrrrrrr, un peu froid ce matin, mets ta cagoule !";
@@ -116,6 +107,7 @@
                         //O_writeBlock01.append(A_arrayBlock01[I_index]+' ');
                         let I_index = I_indexArrayBlock01;
                         this.O_writeNode.textContent = this.A_arrayBlock01[I_index] + '°C ';
+                        O_block02.append(this.A_arrayBlock01[I_index] + '°C, ');
 
                         if (this.A_arrayBlock01[I_index] <= 0 && this.A_arrayBlock01[I_index] >= -10){
                             this.O_writeNode.setAttribute("class", "blue");
@@ -135,11 +127,19 @@
 
                         I_indexArrayBlock01++;
                         if (I_index === this.A_arrayBlock01.length-1) {I_indexArrayBlock01=0}
-                    },1500);
+                    },250);
                 }
             }
 
-            new Temperature(O_block01);
+            // Initialize tablists and the class TabsManual
+            window.addEventListener('load', function () {
+                var tablists = document.querySelectorAll('[role=tablist].manual');
+                for (var i = 0; i < tablists.length; i++) {
+                    new TabsManual(tablists[i]);
+                }
+            });
+
+            new Temperature(O_block01, O_block02);
 
         </script>
     </div>
